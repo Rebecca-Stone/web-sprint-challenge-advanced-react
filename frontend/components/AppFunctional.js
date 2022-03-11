@@ -14,7 +14,6 @@ export default function AppFunctional(props) {
     axios
       .post(URL, newInfo)
       .then((res) => {
-        console.log(res.data);
         setSubmitMessage(res.data.message);
       })
       .catch((err) => console.log(err));

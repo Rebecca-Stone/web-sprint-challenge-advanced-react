@@ -22,7 +22,7 @@ export default class AppClass extends React.Component {
 
   componentDidUpdate() {}
 
-  getMessage = () => {
+  postNewPlayer = () => {
     const newPlayer = {
       x: this.state.x,
       y: this.state.y,
@@ -44,10 +44,10 @@ export default class AppClass extends React.Component {
 
   onSubmit = (evt) => {
     evt.preventDefault();
-    this.getMessage();
+    this.postNewPlayer();
     this.setState({
-      email: '',
-    })
+      email: "",
+    });
   };
 
   onChange = (evt) => {
@@ -130,7 +130,7 @@ export default class AppClass extends React.Component {
   };
 
   render() {
-    const { x, y, count, submitMessage, directionMessage } = this.state;
+    const { x, y, count, email, submitMessage, directionMessage } = this.state;
     const { className } = this.props;
     return (
       <div id="wrapper" className={className}>
@@ -141,15 +141,33 @@ export default class AppClass extends React.Component {
           <h3 id="steps">You moved {count} times</h3>
         </div>
         <div id="grid">
-          <div className="square"></div>
-          <div className="square"></div>
-          <div className="square"></div>
-          <div className="square"></div>
-          <div className="square active">B</div>
-          <div className="square"></div>
-          <div className="square"></div>
-          <div className="square"></div>
-          <div className="square"></div>
+          <div className={y === 1 && x === 1 ? "square active" : "square"}>
+            {y === 1 && x === 1 ? "B" : ""}
+          </div>
+          <div className={y === 1 && x === 2 ? "square active" : "square"}>
+            {y === 1 && x === 2 ? "B" : ""}
+          </div>
+          <div className={y === 1 && x === 3 ? "square active" : "square"}>
+            {y === 1 && x === 3 ? "B" : ""}
+          </div>
+          <div className={y === 2 && x === 1 ? "square active" : "square"}>
+            {y === 2 && x === 1 ? "B" : ""}
+          </div>
+          <div className={y === 2 && x === 2 ? "square active" : "square"}>
+            {y === 2 && x === 2 ? "B" : ""}
+          </div>
+          <div className={y === 2 && x === 3 ? "square active" : "square"}>
+            {y === 2 && x === 3 ? "B" : ""}
+          </div>
+          <div className={y === 3 && x === 1 ? "square active" : "square"}>
+            {y === 3 && x === 1 ? "B" : ""}
+          </div>
+          <div className={y === 3 && x === 2 ? "square active" : "square"}>
+            {y === 3 && x === 2 ? "B" : ""}
+          </div>
+          <div className={y === 3 && x === 3 ? "square active" : "square"}>
+            {y === 3 && x === 3 ? "B" : ""}
+          </div>
         </div>
         <div className="info">
           <h3 id="message">
@@ -180,7 +198,7 @@ export default class AppClass extends React.Component {
             id="email"
             type="email"
             placeholder="type email"
-            value={this.state.email}
+            value={email}
           ></input>
           <input id="submit" type="submit"></input>
         </form>
