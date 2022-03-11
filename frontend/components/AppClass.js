@@ -23,8 +23,7 @@ export default class AppClass extends React.Component {
   }
 
   componentDidMount(){
-    // this.getMessage()
-    console.log(this.state);
+    console.log('this is state when mounting', this.state);
   }
 
   getMessage = () => {
@@ -40,7 +39,7 @@ export default class AppClass extends React.Component {
        console.log('this is the posting res', res)
       this.setState({
         ...this.state, 
-        submitMessage: [...this.state.submitMessage, res.message]
+        submitMessage: [...this.state.submitMessage, res.data.message]
       })
     })
     .catch(err => {
@@ -103,3 +102,7 @@ export default class AppClass extends React.Component {
     );
   }
 }
+
+// (1, 1)(2, 1)(3, 1)
+// (1, 2)(2, 2)(3, 2)
+// (1, 3)(2, 3)(3, 3);
