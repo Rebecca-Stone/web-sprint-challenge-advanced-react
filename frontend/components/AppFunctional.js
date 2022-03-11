@@ -4,13 +4,51 @@ import axios from 'axios';
 export default function AppFunctional(props) {
   //need slices of state for coordinates(x, y), count, email, submitMessage, directionMessage
 
+  const URL = "http://localhost:9000/api/result";
+  const [cordX, setCordX] = useState(2);
+  const [cordY, setCordY] = useState(2);
+  const [count, setCount] = useState(0);
+  const [email, setEmail] = useState('');
+  const [submitMessage, setSubmitMessage] = useState('');
+  const [directionMessage, setDirectionMessage] = useState('');
 
+  const newPlayer = newInfo => {
+    axios.post(URL, newInfo)
+    .then(res => {
+      console.log(res)
+      setSubmitMessage(res.data.message)
+    })
+    .catch(err => 
+      console.log(err)
+      )
+  }
+
+  const onSubmit = evt => {
+    const newInfo = {
+      x: cordX,
+      y: cordY,
+      steps: count,
+      email: email
+    }
+    newPlayer(newInfo);
+    evt.preventDefault();
+    setEmail('');
+  }
+
+  const reset = () => {
+    setCordX(2);
+    setCordY(2);
+    setCount(0);
+    setEmail('');
+    setSubmitMessage('');
+    setDirectionMessage('');
+  }
 
   return (
     <div id="wrapper" className={props.className}>
       <div className="info">
-        <h3 id="coordinates">Coordinates (2, 2)</h3>
-        <h3 id="steps">You moved 0 times</h3>
+        <h3 id="coordinates">Coordinates ({cordX}, {cordY})</h3>
+        <h3 id="steps">You moved {count} times</h3>
       </div>
       <div id="grid">
         <div className="square"></div>
@@ -24,16 +62,19 @@ export default function AppFunctional(props) {
         <div className="square"></div>
       </div>
       <div className="info">
-        <h3 id="message"></h3>
+        <h3 id="message">
+          {submitMessage}
+          {directionMessage}
+          </h3>
       </div>
       <div id="keypad">
         <button id="left">LEFT</button>
         <button id="up">UP</button>
         <button id="right">RIGHT</button>
         <button id="down">DOWN</button>
-        <button id="reset">reset</button>
+        <button id="reset" onClick={reset}>reset</button>
       </div>
-      <form>
+      <form onSubmit={onSubmit} >
         <input id="email" type="email" placeholder="type email"></input>
         <input id="submit" type="submit"></input>
       </form>
