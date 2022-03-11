@@ -8,9 +8,7 @@ const initialState = {
   y: 2,
   count: 0,
   email: "",
-  submitMessage: "",
-  directionMessage: "",
-  errorMessage: "",
+  message: "",
 };
 
 export default class AppClass extends React.Component {
@@ -18,10 +16,6 @@ export default class AppClass extends React.Component {
     super(props);
     this.state = initialState;
   }
-
-  componentDidMount() {}
-
-  componentDidUpdate() {}
 
   postNewPlayer = () => {
     const newPlayer = {
@@ -33,10 +27,9 @@ export default class AppClass extends React.Component {
     axios
       .post(URL, newPlayer)
       .then((res) => {
-        console.log(res.data)
         this.setState({
           ...this.state,
-          submitMessage: [...this.state.submitMessage, res.data.message,
+          message: [...this.state.message, res.data.message,
           ],
           
         });
@@ -44,7 +37,7 @@ export default class AppClass extends React.Component {
       .catch((err) => {
         this.setState({
           ...this.state,
-          errorMessage: err.response.data.message
+          message: err.response.data.message
         })
       });
   };
@@ -54,7 +47,6 @@ export default class AppClass extends React.Component {
     this.postNewPlayer();
     this.setState({
       email: "",
-      
     });
   };
 
@@ -69,8 +61,7 @@ export default class AppClass extends React.Component {
       y: 2,
       count: 0,
       email: "",
-      submitMessage: "",
-      directionMessage: "",
+      message: "",
     });
   };
 
@@ -80,12 +71,12 @@ export default class AppClass extends React.Component {
         ...this.state,
         x: this.state.x - 1,
         count: this.state.count + 1,
-        directionMessage: "",
+        message: "",
       });
     } else {
       this.setState({
         ...this.state,
-        directionMessage: "You can't go left",
+        message: "You can't go left",
       });
     }
   };
@@ -96,12 +87,11 @@ export default class AppClass extends React.Component {
         ...this.state,
         x: this.state.x + 1,
         count: this.state.count + 1,
-        directionMessage: "",
       });
     } else {
       this.setState({
         ...this.state,
-        directionMessage: "You can't go right",
+        message: "You can't go right",
       });
     }
   };
@@ -112,12 +102,12 @@ export default class AppClass extends React.Component {
         ...this.state,
         y: this.state.y - 1,
         count: this.state.count + 1,
-        directionMessage: "",
+        message: "",
       });
     } else {
       this.setState({
         ...this.state,
-        directionMessage: "You can't go up",
+        message: "You can't go up",
       });
     }
   };
@@ -132,13 +122,13 @@ export default class AppClass extends React.Component {
     } else {
       this.setState({
         ...this.state,
-        directionMessage: "You can't go down",
+        message: "You can't go down",
       });
     }
   };
 
   render() {
-    const { x, y, count, email, submitMessage, directionMessage, errorMessage } = this.state;
+    const { x, y, count, email, message } = this.state;
     const { className } = this.props;
     return (
       <div id="wrapper" className={className}>
@@ -179,9 +169,7 @@ export default class AppClass extends React.Component {
         </div>
         <div className="info">
           <h3 id="message">
-            {submitMessage}
-            {directionMessage}
-            {errorMessage}
+            {message}
           </h3>
         </div>
         <div id="keypad">
