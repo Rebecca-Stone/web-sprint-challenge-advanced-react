@@ -7,9 +7,7 @@ const initialState = {
   x: 2,
   y: 2,
   count: 0,
-  form: {
-    email: "",
-  },
+  email: "",
   submitMessage: "",
   directionMessage: "",
 };
@@ -20,28 +18,20 @@ export default class AppClass extends React.Component {
     this.state = initialState;
   }
 
-  componentDidMount() {
-    // console.log("this is state when mounting", this.state);
-  }
+  componentDidMount() {}
 
-  componentDidUpdate() {
-    console.log("this is what state is now", this.state);
-    console.log(this.props);
-  }
+  componentDidUpdate() {}
 
-  
   getMessage = () => {
     const newPlayer = {
       x: this.state.x,
       y: this.state.y,
       steps: this.state.count,
-      email: this.state.form.email,
+      email: this.state.email,
     };
-    // console.log("this is the newPlayer", newPlayer);
     axios
       .post(URL, newPlayer)
       .then((res) => {
-        // console.log("this is the posting res", res);
         this.setState({
           ...this.state,
           submitMessage: [...this.state.submitMessage, res.data.message],
@@ -55,18 +45,13 @@ export default class AppClass extends React.Component {
   onSubmit = (evt) => {
     evt.preventDefault();
     this.getMessage();
-  };
-
-  changeInput = (key, value) => {
     this.setState({
-      ...this.state,
-      form: { ...this.state.form, [key]: value },
-    });
+      email: '',
+    })
   };
 
   onChange = (evt) => {
-    const { value, id } = evt.target;
-    this.changeInput(id, value);
+    this.setState({ email: evt.target.value });
   };
 
   reset = () => {
@@ -75,9 +60,7 @@ export default class AppClass extends React.Component {
       x: 2,
       y: 2,
       count: 0,
-      form: {
-        email: "",
-      },
+      email: "",
       submitMessage: "",
       directionMessage: "",
     });
@@ -132,19 +115,19 @@ export default class AppClass extends React.Component {
   };
 
   down = () => {
-      if (this.state.y < 3) {
-        this.setState({
-          ...this.state,
-          y: this.state.y + 1,
-          count: this.state.count + 1,
-        });
-      } else {
-        this.setState({
-          ...this.state,
-          directionMessage: "You can't go down",
-        });
-      }
+    if (this.state.y < 3) {
+      this.setState({
+        ...this.state,
+        y: this.state.y + 1,
+        count: this.state.count + 1,
+      });
+    } else {
+      this.setState({
+        ...this.state,
+        directionMessage: "You can't go down",
+      });
     }
+  };
 
   render() {
     const { x, y, count, submitMessage, directionMessage } = this.state;
@@ -187,7 +170,9 @@ export default class AppClass extends React.Component {
           <button id="down" onClick={this.down}>
             DOWN
           </button>
-          <button id="reset" onClick={this.reset}>reset</button>
+          <button id="reset" onClick={this.reset}>
+            reset
+          </button>
         </div>
         <form onSubmit={this.onSubmit}>
           <input
@@ -195,11 +180,9 @@ export default class AppClass extends React.Component {
             id="email"
             type="email"
             placeholder="type email"
+            value={this.state.email}
           ></input>
-          <input
-            id="submit"
-            type="submit"
-          ></input>
+          <input id="submit" type="submit"></input>
         </form>
       </div>
     );
