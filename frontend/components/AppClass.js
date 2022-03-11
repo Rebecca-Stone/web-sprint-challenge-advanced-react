@@ -10,6 +10,7 @@ const initialState = {
   email: "",
   submitMessage: "",
   directionMessage: "",
+  errorMessage: "",
 };
 
 export default class AppClass extends React.Component {
@@ -32,13 +33,19 @@ export default class AppClass extends React.Component {
     axios
       .post(URL, newPlayer)
       .then((res) => {
+        console.log(res.data)
         this.setState({
           ...this.state,
-          submitMessage: [...this.state.submitMessage, res.data.message],
+          submitMessage: [...this.state.submitMessage, res.data.message,
+          ],
+          
         });
       })
       .catch((err) => {
-        console.log(err);
+        this.setState({
+          ...this.state,
+          errorMessage: err.response.data.message
+        })
       });
   };
 
@@ -47,6 +54,7 @@ export default class AppClass extends React.Component {
     this.postNewPlayer();
     this.setState({
       email: "",
+      
     });
   };
 
@@ -130,7 +138,7 @@ export default class AppClass extends React.Component {
   };
 
   render() {
-    const { x, y, count, email, submitMessage, directionMessage } = this.state;
+    const { x, y, count, email, submitMessage, directionMessage, errorMessage } = this.state;
     const { className } = this.props;
     return (
       <div id="wrapper" className={className}>
@@ -138,7 +146,7 @@ export default class AppClass extends React.Component {
           <h3 id="coordinates">
             Coordinates ({x}, {y})
           </h3>
-          <h3 id="steps">You moved {count} times</h3>
+          <h3 id="steps">{count === 1 ? `You moved ${count} time` : `You moved ${count} times`}</h3>
         </div>
         <div id="grid">
           <div className={y === 1 && x === 1 ? "square active" : "square"}>
@@ -173,6 +181,7 @@ export default class AppClass extends React.Component {
           <h3 id="message">
             {submitMessage}
             {directionMessage}
+            {errorMessage}
           </h3>
         </div>
         <div id="keypad">

@@ -9,6 +9,7 @@ export default function AppFunctional(props) {
   const [email, setEmail] = useState("");
   const [submitMessage, setSubmitMessage] = useState("");
   const [directionMessage, setDirectionMessage] = useState("");
+  const [errorMessage, setErrorMessage] = useState("");
 
   const newPlayer = (newInfo) => {
     axios
@@ -16,7 +17,7 @@ export default function AppFunctional(props) {
       .then((res) => {
         setSubmitMessage(res.data.message);
       })
-      .catch((err) => console.log(err));
+      .catch((err) => setErrorMessage(err.response.data.message));
   };
 
   const onSubmit = (evt) => {
@@ -86,7 +87,7 @@ export default function AppFunctional(props) {
         <h3 id="coordinates">
           Coordinates ({cordX}, {cordY})
         </h3>
-        <h3 id="steps">You moved {count} times</h3>
+        <h3 id="steps">{count === 1 ? `You moved ${count} time` : `You moved ${count} times`}</h3>
       </div>
       <div id="grid">
         <div
@@ -139,6 +140,7 @@ export default function AppFunctional(props) {
         <h3 id="message">
           {submitMessage}
           {directionMessage}
+          {errorMessage}
         </h3>
       </div>
       <div id="keypad">
