@@ -5,11 +5,13 @@ const URL = 'http://localhost:9000/api/result';
 
 const initialState = {
   coordinates: {
-    x: 1, 
-    y: 2,
+    "x": 2, 
+    "y": 2,
   },
-  steps: 3, 
-  email: "lady@gaga.com", 
+  "steps": 3, 
+  form: {
+    "email": ''
+  }, 
   submitMessage: '',
   directionMessage: '',
 }
@@ -21,18 +23,21 @@ export default class AppClass extends React.Component {
   }
 
   componentDidMount(){
-    this.getMessage()
+    // this.getMessage()
+    console.log(this.state);
   }
 
   getMessage = () => {
     const newPlayer = {
-      "x": this.state.coordinates.x,
-      "y": this.state.coordinates.y,
-      "steps": this.state.steps,
-      "email": this.state.email
+      "x": this.state.coordinates["x"],
+      "y": this.state.coordinates["y"],
+      "steps": this.state["steps"],
+      "email": this.state.form["email"]
     }
+    console.log('this is the newPlayer',newPlayer)
     axios.post(URL, newPlayer)
      .then(res => {
+       console.log('this is the posting res', res)
       this.setState({
         ...this.state, 
         submitMessage: [...this.state.submitMessage, res.message]
@@ -43,11 +48,21 @@ export default class AppClass extends React.Component {
     })
   }
 
-  changeEmail = (key, value) => {
+  onSubmit = evt => {
+    evt.preventDefault()
+    this.getMessage()
+  }
+
+  changeInput = (key, value) => {
     this.setState({
       ...this.state,
-      "email": { ...this.state["email"], [key]: value }
+      form: {...this.state.form, [key]: value } 
     })
+  }
+
+  onChange = evt => {
+    const { value, id } = evt.target
+    this.changeInput(id, value);
   }
 
   render() {
@@ -56,7 +71,7 @@ export default class AppClass extends React.Component {
     return (
       <div id="wrapper" className={className}>
         <div className="info">
-          <h3 id="coordinates">Coordinates ({coordinates.x}, {coordinates.y})</h3>
+          <h3 id="coordinates">Coordinates ({coordinates["x"]}, {coordinates["y"]})</h3>
           <h3 id="steps">You moved {steps} times</h3>
         </div>
         <div id="grid">
@@ -80,9 +95,9 @@ export default class AppClass extends React.Component {
           <button id="down">DOWN</button>
           <button id="reset">reset</button>
         </div>
-        <form>
-          <input id="email" type="email" placeholder="type email"></input>
-          <input id="submit" type="submit"></input>
+        <form onSubmit={this.onSubmit}>
+          <input onChange={this.onChange} id="email" type="email" placeholder="type email"></input>
+          <input id="submit" type="submit" ></input>
         </form>
       </div>
     );
