@@ -89,15 +89,51 @@ export default function AppFunctional(props) {
         <h3 id="steps">You moved {count} times</h3>
       </div>
       <div id="grid">
-        <div className="square"></div>
-        <div className="square"></div>
-        <div className="square"></div>
-        <div className="square"></div>
-        <div className="square active">B</div>
-        <div className="square"></div>
-        <div className="square"></div>
-        <div className="square"></div>
-        <div className="square"></div>
+        <div
+          className={cordY === 1 && cordX === 1 ? "square active" : "square"}
+        >
+          {cordY === 1 && cordX === 1 ? "B" : ""}
+        </div>
+        <div
+          className={cordY === 1 && cordX === 2 ? "square active" : "square"}
+        >
+          {cordY === 1 && cordX === 2 ? "B" : ""}
+        </div>
+        <div
+          className={cordY === 1 && cordX === 3 ? "square active" : "square"}
+        >
+          {cordY === 1 && cordX === 3 ? "B" : ""}
+        </div>
+        <div
+          className={cordY === 2 && cordX === 1 ? "square active" : "square"}
+        >
+          {cordY === 2 && cordX === 1 ? "B" : ""}
+        </div>
+        <div
+          className={cordY === 2 && cordX === 2 ? "square active" : "square"}
+        >
+          {cordY === 2 && cordX === 2 ? "B" : ""}
+        </div>
+        <div
+          className={cordY === 2 && cordX === 3 ? "square active" : "square"}
+        >
+          {cordY === 2 && cordX === 3 ? "B" : ""}
+        </div>
+        <div
+          className={cordY === 3 && cordX === 1 ? "square active" : "square"}
+        >
+          {cordY === 3 && cordX === 1 ? "B" : ""}
+        </div>
+        <div
+          className={cordY === 3 && cordX === 2 ? "square active" : "square"}
+        >
+          {cordY === 3 && cordX === 2 ? "B" : ""}
+        </div>
+        <div
+          className={cordY === 3 && cordX === 3 ? "square active" : "square"}
+        >
+          {cordY === 3 && cordX === 3 ? "B" : ""}
+        </div>
       </div>
       <div className="info">
         <h3 id="message">
