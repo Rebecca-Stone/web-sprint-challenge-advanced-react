@@ -26,24 +26,10 @@ export default class AppClass extends React.Component {
 
   componentDidUpdate() {
     console.log("this is what state is now", this.state);
-    console.log(this.props)
+    console.log(this.props);
   }
 
-  onClear = (id) => {
-    if (id === "rest") {
-      this.setState({
-        ...this.state,
-        x: 2,
-        y: 2,
-        count: 0,
-        form: {
-          email: "",
-        },
-        submitMessage: "",
-        directionMessage: "",
-      });
-    }
-  };
+  
   getMessage = () => {
     const newPlayer = {
       x: this.state.x,
@@ -83,57 +69,73 @@ export default class AppClass extends React.Component {
     this.changeInput(id, value);
   };
 
-  onClick = (id) => {
-    if (id === "left") {
-      if (this.state.x > 1) {
-        this.setState({
-          ...this.state,
-          x: this.state.x - 1,
-          count: this.state.count + 1,
-        });
-      } else {
-        this.setState({
-          ...this.state,
-          directionMessage: "You can't go left",
-        });
-      }
-    } 
-    
-    else if (id === "right") {
-      if (this.state.x < 3) {
-        this.setState({
-          ...this.state,
-          x: this.state.x + 1,
-          count: this.state.count + 1,
-        });
-      } else {
-        this.setState({
-          ...this.state,
-          directionMessage: "You can't go right",
-        });
-      }
-    } 
-    
-    else if (id === "up") {
-      if (this.state.y > 1) {
-        this.setState({
-          ...this.state,
-          x: this.state.y - 1,
-          count: this.state.count + 1,
-        });
-      } else {
-        this.setState({
-          ...this.state,
-          directionMessage: "You can't go up",
-        });
-      }
-    } 
-    
-    else if (id === "down") {
+  reset = () => {
+    this.setState({
+      ...this.state,
+      x: 2,
+      y: 2,
+      count: 0,
+      form: {
+        email: "",
+      },
+      submitMessage: "",
+      directionMessage: "",
+    });
+  };
+
+  left = () => {
+    if (this.state.x > 1) {
+      this.setState({
+        ...this.state,
+        x: this.state.x - 1,
+        count: this.state.count + 1,
+        directionMessage: "",
+      });
+    } else {
+      this.setState({
+        ...this.state,
+        directionMessage: "You can't go left",
+      });
+    }
+  };
+
+  right = () => {
+    if (this.state.x < 3) {
+      this.setState({
+        ...this.state,
+        x: this.state.x + 1,
+        count: this.state.count + 1,
+        directionMessage: "",
+      });
+    } else {
+      this.setState({
+        ...this.state,
+        directionMessage: "You can't go right",
+      });
+    }
+  };
+
+  up = () => {
+    if (this.state.y > 1) {
+      this.setState({
+        ...this.state,
+        y: this.state.y - 1,
+        count: this.state.count + 1,
+        directionMessage: "",
+      });
+    } else {
+      this.setState({
+        ...this.state,
+        directionMessage: "You can't go up",
+      });
+    }
+  };
+
+  down = () => {
       if (this.state.y < 3) {
         this.setState({
           ...this.state,
-          x: this.state.y + 1,
+          y: this.state.y + 1,
           count: this.state.count + 1,
         });
       } else {
@@ -143,11 +145,6 @@ export default class AppClass extends React.Component {
         });
       }
     }
-
-
-    console.log("x:", this.state.x, "y:", this.state.y);
-    console.log("steps:", this.state.count);
-  };
 
   render() {
     const { x, y, count, submitMessage, directionMessage } = this.state;
@@ -178,19 +175,19 @@ export default class AppClass extends React.Component {
           </h3>
         </div>
         <div id="keypad">
-          <button id="left" onClick={() => this.onClick("left")}>
+          <button id="left" onClick={this.left}>
             LEFT
           </button>
-          <button id="up" onClick={() => this.onClick("up")}>
+          <button id="up" onClick={this.up}>
             UP
           </button>
-          <button id="right" onClick={() => this.onClick("right")}>
+          <button id="right" onClick={this.right}>
             RIGHT
           </button>
-          <button id="down" onClick={() => this.onClick("down")}>
+          <button id="down" onClick={this.down}>
             DOWN
           </button>
-          <button id="reset">reset</button>
+          <button id="reset" onClick={this.reset}>reset</button>
         </div>
         <form onSubmit={this.onSubmit}>
           <input
@@ -199,19 +196,12 @@ export default class AppClass extends React.Component {
             type="email"
             placeholder="type email"
           ></input>
-          <input id="submit" type="submit" onClick={() => this.onClear("rest")}></input>
+          <input
+            id="submit"
+            type="submit"
+          ></input>
         </form>
       </div>
     );
   }
 }
-
-// (x, y)
-// (1, 1)(2, 1)(3, 1)
-// (1, 2)(2, 2)(3, 2)
-// (1, 3)(2, 3)(3, 3);
-
-// moving up --y
-// moving down ++y
-// moving right ++x
-//moving left --x
