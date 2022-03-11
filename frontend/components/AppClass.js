@@ -3,10 +3,13 @@ import axios from 'axios'
 
 const URL = 'http://localhost:9000/api/result';
 
+const x = 2;
+const y = 2;
+
 const initialState = {
   coordinates: {
-    "x": 2, 
-    "y": 2,
+    "x": x, 
+    "y": y,
   },
   "steps": 3, 
   form: {
@@ -103,6 +106,46 @@ export default class AppClass extends React.Component {
   }
 }
 
+// (x, y)
 // (1, 1)(2, 1)(3, 1)
 // (1, 2)(2, 2)(3, 2)
 // (1, 3)(2, 3)(3, 3);
+
+// moving up --y 
+// moving down ++y
+// moving right ++x
+//moving left --x
+
+// onClick = id => {
+  // if(id == "left"){
+    // this.setState({
+      // ...this.state,
+    // coordinates["x"]: --x
+    // })else if(id == "right"){
+      // this.setState({
+        // ...this.state,
+        // coordinates["x"]: ++x
+      // })else if(id == "up"){
+        // this.setState({
+          // ...this.state,
+          // coordinates["y"]: --y
+        // })else if(id == "down"){
+          // this.setState({
+            // ...this.state,
+            //  coordinates["y"]: ++y
+          // }) 
+        // }
+      // } 
+    // }
+  // }
+// }
+
+// onClick={evt => this.onClick(id)} 
+
+{/* 
+<button id="left">LEFT</button>
+<button id="up">UP</button>
+<button id="right">RIGHT</button>
+<button id="down">DOWN</button>
+<button id="reset">reset</button> 
+*/}
