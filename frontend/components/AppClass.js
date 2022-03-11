@@ -3,14 +3,9 @@ import axios from "axios";
 
 const URL = "http://localhost:9000/api/result";
 
-// let x = 2;
-// let y = 2;
-// let allSteps = 0;
-
 const initialState = {
   x: 2,
   y: 2,
-
   count: 0,
   form: {
     email: "",
@@ -30,9 +25,25 @@ export default class AppClass extends React.Component {
   }
 
   componentDidUpdate() {
-    // console.log("this is what state is now", this.state);
+    console.log("this is what state is now", this.state);
+    console.log(this.props)
   }
 
+  onClear = (id) => {
+    if (id === "rest") {
+      this.setState({
+        ...this.state,
+        x: 2,
+        y: 2,
+        count: 0,
+        form: {
+          email: "",
+        },
+        submitMessage: "",
+        directionMessage: "",
+      });
+    }
+  };
   getMessage = () => {
     const newPlayer = {
       x: this.state.x,
@@ -86,7 +97,9 @@ export default class AppClass extends React.Component {
           directionMessage: "You can't go left",
         });
       }
-    } else if (id === "right") {
+    } 
+    
+    else if (id === "right") {
       if (this.state.x < 3) {
         this.setState({
           ...this.state,
@@ -99,12 +112,14 @@ export default class AppClass extends React.Component {
           directionMessage: "You can't go right",
         });
       }
-    } else if (id === "up") {
+    } 
+    
+    else if (id === "up") {
       if (this.state.y > 1) {
         this.setState({
           ...this.state,
           x: this.state.y - 1,
-          count: this.state.count + 1 
+          count: this.state.count + 1,
         });
       } else {
         this.setState({
@@ -112,12 +127,14 @@ export default class AppClass extends React.Component {
           directionMessage: "You can't go up",
         });
       }
-    } else if (id === "down") {
+    } 
+    
+    else if (id === "down") {
       if (this.state.y < 3) {
         this.setState({
           ...this.state,
           x: this.state.y + 1,
-          count: this.state.count + 1 
+          count: this.state.count + 1,
         });
       } else {
         this.setState({
@@ -126,6 +143,8 @@ export default class AppClass extends React.Component {
         });
       }
     }
+
+
     console.log("x:", this.state.x, "y:", this.state.y);
     console.log("steps:", this.state.count);
   };
@@ -180,7 +199,7 @@ export default class AppClass extends React.Component {
             type="email"
             placeholder="type email"
           ></input>
-          <input id="submit" type="submit"></input>
+          <input id="submit" type="submit" onClick={() => this.onClear("rest")}></input>
         </form>
       </div>
     );

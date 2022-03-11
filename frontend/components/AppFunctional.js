@@ -1,6 +1,11 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
+import axios from 'axios';
 
 export default function AppFunctional(props) {
+  //need slices of state for coordinates(x, y), count, email, submitMessage, directionMessage
+
+
+
   return (
     <div id="wrapper" className={props.className}>
       <div className="info">
